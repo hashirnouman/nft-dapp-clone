@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CtaButton } from "../../components/Button/CtaButton";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { NavItem } from "../../components/Navbar/Navitem";
@@ -14,7 +14,9 @@ import Aboutus from "./components/Aboutus";
 import Footer from "./components/Footer";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
+import { useWeb3React } from "@web3-react/core";
 import { CoinbaseWalletSDK } from "@coinbase/wallet-sdk/dist/CoinbaseWalletSDK";
+import abi from "../../utils/abi.json";
 const providerOptions = {
   coinbasewallet: {
     package: CoinbaseWalletSDK,
@@ -25,10 +27,19 @@ const providerOptions = {
     },
   },
 };
-
+const contractAddress = "0x2159AaE2D2C93a9C2201599cd72A3A31FdB33e73";
+const provider = new ethers.providers.JsonRpcProvider(
+  "https://goerli.infura.io/v3/5329145a21fe4e85a2cfa300680d29de"
+);
+const privatekey = "";
+const wallet = new ethers.Wallet(privatekey, provider);
+const signer = provider.getSigner();
+const contract = new ethers.Contract(contractAddress, abi, signer);
 type Props = {};
 
 const Home = (props: Props) => {
+  const { active, account } = useWeb3React();
+  const [web3provider, setWeb3Provider] = useState();
   const connectWallet = async () => {
     try {
       let web3modal = new Web3Modal({
@@ -38,9 +49,38 @@ const Home = (props: Props) => {
       const web3ModalInstance = await web3modal.connect();
       const web3Provider = new ethers.providers.Web3Provider(web3ModalInstance);
       console.log(web3Provider);
+      if (web3Provider) {
+        setWeb3Provider(web3Provider);
+      }
     } catch (error) {
       console.log(error);
     }
+  };
+  const mint = async () => {
+    const connection = contract.connect(signer);
+    const constractWithWallet = contract.connect(wallet);
+    const address = connection.address;
+    const tx = await contract.safeMint({
+      gasLimit: 10000,
+    });
+    await tx.wait();
+    if (tx) {
+      alert("Success");
+    }
+  };
+  const sendDaiTo = async (to: any, amountInEther: string) => {
+    const providerz = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+
+    const mintContract = new ethers.Contract(contractAddress, abi, providerz);
+
+    const tokenUnits = await mintContract.safeMint();
+    const tokenAmountInEther = ethers.utils.parseUnits(
+      amountInEther,
+      tokenUnits
+    );
+
+    const daiContractWithSigner = mintContract.connect(signer);
   };
   return (
     <div className="overflow-hidden">
@@ -60,7 +100,15 @@ const Home = (props: Props) => {
               justifyContent: "space-between",
             }}
           >
-            <WalletButton onClick={connectWallet}> Connect Wallet</WalletButton>
+            {web3provider ? (
+              <WalletButton>
+                <div className="whitespace-no-wrap overflow-hidden text-ellipsis">
+                  {web3provider.provider.selectedAddress}
+                </div>
+              </WalletButton>
+            ) : (
+              <WalletButton onClick={connectWallet}>Connect</WalletButton>
+            )}
             <LoginButton>
               <AiOutlineUser color="white" size={30} />
             </LoginButton>
@@ -79,7 +127,13 @@ const Home = (props: Props) => {
               ADIPISCING.
             </div>
             <div className="flex justify-center">
-              <CtaButton>Buy Throtel</CtaButton>
+              <CtaButton
+                onClick={() => {
+                  mint();
+                }}
+              >
+                Buy Throtel
+              </CtaButton>
             </div>
           </div>
         </div>

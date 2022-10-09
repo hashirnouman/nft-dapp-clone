@@ -11,4 +11,5 @@ export const WalletButton = styled.div`
   padding-top: 20px;
   padding-bottom: 20px;
   cursor: pointer;
+  text-overflow: ellipsis;
 `;
