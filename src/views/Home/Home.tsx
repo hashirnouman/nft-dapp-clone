@@ -18,27 +18,26 @@ import { useWeb3React } from "@web3-react/core";
 import { CoinbaseWalletSDK } from "@coinbase/wallet-sdk/dist/CoinbaseWalletSDK";
 import abi from "../../utils/abi.json";
 const providerOptions = {
-  coinbasewallet: {
-    package: CoinbaseWalletSDK,
-    options: {
-      appName: "nft-dapp",
-      infuraId: "5329145a21fe4e85a2cfa300680d29de",
-      theme: "dark",
-    },
-  },
+  // coinbasewallet: {
+  //   package: CoinbaseWalletSDK,
+  //   options: {
+  //     appName: "nft-dapp",
+  //     infuraId: "5329145a21fe4e85a2cfa300680d29de",
+  //     theme: "dark",
+  //   },
+  // },
 };
 const contractAddress = "0x2159AaE2D2C93a9C2201599cd72A3A31FdB33e73";
 const provider = new ethers.providers.JsonRpcProvider(
   "https://goerli.infura.io/v3/5329145a21fe4e85a2cfa300680d29de"
 );
 const privatekey = "";
-const wallet = new ethers.Wallet(privatekey, provider);
+// const wallet = new ethers.Wallet(privatekey, provider);
 const signer = provider.getSigner();
 const contract = new ethers.Contract(contractAddress, abi, signer);
 type Props = {};
 
 const Home = (props: Props) => {
-  const { active, account } = useWeb3React();
   const [web3provider, setWeb3Provider] = useState();
   const connectWallet = async () => {
     try {
@@ -56,62 +55,48 @@ const Home = (props: Props) => {
       console.log(error);
     }
   };
-  const mint = async () => {
-    const connection = contract.connect(signer);
-    const constractWithWallet = contract.connect(wallet);
-    const address = connection.address;
-    const tx = await contract.safeMint({
-      gasLimit: 10000,
-    });
-    await tx.wait();
-    if (tx) {
-      alert("Success");
-    }
-  };
-  const sendDaiTo = async (to: any, amountInEther: string) => {
-    const providerz = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-
-    const mintContract = new ethers.Contract(contractAddress, abi, providerz);
-
-    const tokenUnits = await mintContract.safeMint();
-    const tokenAmountInEther = ethers.utils.parseUnits(
-      amountInEther,
-      tokenUnits
-    );
-
-    const daiContractWithSigner = mintContract.connect(signer);
-  };
+  // const mint = async () => {
+  //   const connection = contract.connect(signer);
+  //   const constractWithWallet = contract.connect(wallet);
+  //   const address = connection.address;
+  //   const tx = await contract.safeMint();
+  //   await tx.wait();
+  //   if (tx) {
+  //     alert("Success");
+  //   }
+  // };
   return (
     <div className="overflow-hidden">
       <div className={styles.herosection}>
         <Navbar>
-          <NavItem>Home</NavItem>
-          <NavItem>Market Place</NavItem>
-          <NavItem>How to Play</NavItem>
-          <div>
-            <img src={logo} alt="logo" />
-          </div>
-          <NavItem>Play to earn</NavItem>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            {web3provider ? (
-              <WalletButton>
-                <div className="whitespace-no-wrap overflow-hidden text-ellipsis">
-                  {web3provider.provider.selectedAddress}
-                </div>
-              </WalletButton>
-            ) : (
-              <WalletButton onClick={connectWallet}>Connect</WalletButton>
-            )}
-            <LoginButton>
-              <AiOutlineUser color="white" size={30} />
-            </LoginButton>
+          <div className="">
+            <NavItem>Home</NavItem>
+            <NavItem>Market Place</NavItem>
+            <NavItem>How to Play</NavItem>
+            <div>
+              <img src={logo} alt="logo" />
+            </div>
+            <NavItem>Play to earn</NavItem>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              {web3provider ? (
+                <WalletButton>
+                  <div className="whitespace-no-wrap overflow-hidden text-ellipsis">
+                    {web3provider.provider.selectedAddress}
+                  </div>
+                </WalletButton>
+              ) : (
+                <WalletButton onClick={connectWallet}>Connect</WalletButton>
+              )}
+              <LoginButton>
+                <AiOutlineUser color="white" size={30} />
+              </LoginButton>
+            </div>
           </div>
         </Navbar>
         <div className="flex justify-center text-white align-center pt-40 ">
@@ -127,13 +112,7 @@ const Home = (props: Props) => {
               ADIPISCING.
             </div>
             <div className="flex justify-center">
-              <CtaButton
-                onClick={() => {
-                  mint();
-                }}
-              >
-                Buy Throtel
-              </CtaButton>
+              <CtaButton onClick={() => {}}>Buy Throtel</CtaButton>
             </div>
           </div>
         </div>
