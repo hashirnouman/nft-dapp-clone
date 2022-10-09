@@ -1,0 +1,13 @@
+.aboutsection {
+  width: 80vw;
+  height: 60vh;
+  background-color: #1b1b36;
+  border-radius: 30px;
+  margin: 20px;
+}
+.bg {
+  position: absolute;
+  left: 50px;
+  top: 40px;
+  z-index: -1;
+}
