@@ -1,20 +1,12 @@
 import React, { useState } from "react";
 import { CtaButton } from "../../components/Button/CtaButton";
-// import { Navbar } from "../../components/Navbar/Navbar";
-import { NavItem } from "../../components/Navbar/Navitem";
 import styles from "./styles/Home.module.css";
-import logo from "../../assets/logo.svg";
-import { WalletButton } from "../../components/Button/WalletButton";
-import { LoginButton } from "../../components/Button/LoginButton";
-import { AiOutlineUser } from "react-icons/ai";
-import CardButton from "../../components/Button/CardButton";
 import Card from "../../components/Card/Card";
 import CountDownSection from "./components/CountDownSection";
 import Aboutus from "./components/Aboutus";
 import Footer from "./components/Footer";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import { useWeb3React, Web3ReactProvider } from "@web3-react/core";
 import { CoinbaseWalletSDK } from "@coinbase/wallet-sdk/dist/CoinbaseWalletSDK";
 import abi from "../../utils/abi.json";
 import Navbar from "../../components/Navbar";
@@ -61,7 +53,6 @@ const Home = (props: Props) => {
   };
 
   const startMint = async () => {
-    
     const provider = new ethers.providers.JsonRpcProvider(
       "https://goerli.infura.io/v3/5329145a21fe4e85a2cfa300680d29de"
     );
