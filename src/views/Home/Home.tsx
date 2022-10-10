@@ -14,7 +14,7 @@ import Aboutus from "./components/Aboutus";
 import Footer from "./components/Footer";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import { useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ReactProvider } from "@web3-react/core";
 import { CoinbaseWalletSDK } from "@coinbase/wallet-sdk/dist/CoinbaseWalletSDK";
 import abi from "../../utils/abi.json";
 import Navbar from "../../components/Navbar";
@@ -28,18 +28,15 @@ const providerOptions = {
     },
   },
 };
-const contractAddress = "0x2159AaE2D2C93a9C2201599cd72A3A31FdB33e73";
-const provider = new ethers.providers.JsonRpcProvider(
-  "https://goerli.infura.io/v3/5329145a21fe4e85a2cfa300680d29de"
-);
 
-// const wallet = new ethers.Wallet(privatekey, provider);
-const signer = provider.getSigner();
-const contract = new ethers.Contract(contractAddress, abi, signer);
 type Props = {};
 
 const Home = (props: Props) => {
   const [web3provider, setWeb3Provider] = useState<React.SetStateAction<{}>>();
+  const [signerValue, setSignerValue] = useState({
+    signer: "",
+  });
+
   const connectWallet = async () => {
     try {
       let web3modal = new Web3Modal({
@@ -47,25 +44,35 @@ const Home = (props: Props) => {
         providerOptions,
       });
       const web3ModalInstance = await web3modal.connect();
-      const web3Provider = new ethers.providers.Web3Provider(web3ModalInstance);
-      console.log(web3Provider);
-      if (web3Provider) {
-        setWeb3Provider(web3Provider);
+      const web3ModalProvider = new ethers.providers.Web3Provider(
+        web3ModalInstance
+      );
+      let signer: any = web3ModalProvider.getSigner();
+      setSignerValue({
+        signer: signer,
+      });
+      console.log(web3ModalProvider);
+      if (web3ModalProvider) {
+        setWeb3Provider(web3ModalProvider);
       }
     } catch (error) {
       console.log(error);
     }
   };
-  // const mint = async () => {
-  //   const connection = contract.connect(signer);
-  //   const constractWithWallet = contract.connect(wallet);
-  //   const address = connection.address;
-  //   const tx = await contract.safeMint();
-  //   await tx.wait();
-  //   if (tx) {
-  //     alert("Success");
-  //   }
-  // };
+
+  const startMint = async () => {
+    const ethPrivkey =
+      "ddee2796064915781efa39e835233de4080d9d9f0b8d3ea9a5a54b6bbe64a96a";
+    const provider = new ethers.providers.JsonRpcProvider(
+      "https://goerli.infura.io/v3/5329145a21fe4e85a2cfa300680d29de"
+    );
+
+    const contractAddress = "0xe1ad5D0a574A5B2909dDf82c30BCEAd80fAE8a7e";
+    const signer: any = signerValue.signer;
+    const contractInstance = new ethers.Contract(contractAddress, abi, signer);
+    const writeContract = contractInstance.connect(signer);
+    await writeContract.safeMint();
+  };
   return (
     <div className="overflow-hidden sm:overflow-x-scroll">
       <div className={styles.herosection}>
@@ -77,13 +84,13 @@ const Home = (props: Props) => {
               <br /> WINN YOUR DREAM PRIZE
             </div>
             <div className="text-center sm:text-md">
-              LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. ULTRICIES{" "}
+              LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT. ULTRICIES
               <br />
               VELIT LACUS, NUNC, LOREM LACINIA ALIQUAM VESTIBULUM. IN
               ADIPISCING.
             </div>
             <div className="flex justify-center">
-              <CtaButton onClick={() => {}}>Buy Throtel</CtaButton>
+              <CtaButton onClick={startMint}>Buy Throtel</CtaButton>
             </div>
           </div>
         </div>
