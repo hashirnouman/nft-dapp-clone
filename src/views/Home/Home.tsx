@@ -39,7 +39,7 @@ const contract = new ethers.Contract(contractAddress, abi, signer);
 type Props = {};
 
 const Home = (props: Props) => {
-  const [web3provider, setWeb3Provider] = useState();
+  const [web3provider, setWeb3Provider] = useState<React.SetStateAction<{}>>();
   const connectWallet = async () => {
     try {
       let web3modal = new Web3Modal({
