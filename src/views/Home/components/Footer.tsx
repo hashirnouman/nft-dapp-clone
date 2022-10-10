@@ -14,7 +14,7 @@ const Footer = (props: Props) => {
           <div>Contact</div>
         </div>
       </div>
-      <div className="flex justify-center space-x-8 ">
+      <div className="flex justify-center space-x-8 sm:space-x-2 ">
         <FaFacebookF color="#f4f4f4" size={25} />
         <FaInstagram color="#f4f4f4" size={25} />
         <FaTwitter color="#f4f4f4" size={25} />
