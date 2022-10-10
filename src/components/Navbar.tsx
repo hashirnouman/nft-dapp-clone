@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../assets/logo.svg";
 import { LoginButton } from "./Button/LoginButton";
 import { WalletButton } from "./Button/WalletButton";
+import { GiHamburgerMenu } from "react-icons/gi";
 type Props = {
   action: any;
   status: any;
@@ -9,18 +10,20 @@ type Props = {
 
 const Navbar = ({ action, status }: Props) => {
   return (
-    <div>
-      <div className="flex  justify-around font-extrabold items-baseline px-5">
-        <div className=" flex space-x-28 text-white  pt-5 text-1xl items-center lg:space-x-16 ">
-          <div>Home</div>
-          <div>Marketplace</div>
-          <div>How to play</div>
-          <div>
-            <img src={logo} alt="logo" />
-          </div>
-          <div>Pay to earn</div>
+    <>
+      <div className="flex justify-between p-5 text-white font-extrabold items-center lg:flex-col w-full">
+        <div className="cursor-pointer lg:hidden">Home</div>
+        <div className=" cursor-pointer lg:hidden">Marketplace</div>
+        <div className="cursor-pointer lg:hidden">How to play</div>
+        <div className="cursor-pointer lg:absolute left-1 top-4">
+          <img src={logo} alt="logo" />
         </div>
-        <div className="flex items-center space-x-3">
+
+        <div className="lg:visible lg:bg-black lg:absolute lg:bottom-0 lg:w-full lg:h-4/5">
+          hello
+        </div>
+        <div className="lg:hidden">Pay to earn</div>
+        <div className="flex items-center space-x-3 lg:hidden">
           {status ? (
             <WalletButton>
               <div className="text-md whitespace-no-wrap overflow-hidden text-ellipsis">
@@ -35,7 +38,7 @@ const Navbar = ({ action, status }: Props) => {
           <LoginButton />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
