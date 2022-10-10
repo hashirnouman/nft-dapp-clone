@@ -61,12 +61,10 @@ const Home = (props: Props) => {
   };
 
   const startMint = async () => {
-    const ethPrivkey =
-      "ddee2796064915781efa39e835233de4080d9d9f0b8d3ea9a5a54b6bbe64a96a";
+    
     const provider = new ethers.providers.JsonRpcProvider(
       "https://goerli.infura.io/v3/5329145a21fe4e85a2cfa300680d29de"
     );
-
     const contractAddress = "0xe1ad5D0a574A5B2909dDf82c30BCEAd80fAE8a7e";
     const signer: any = signerValue.signer;
     const contractInstance = new ethers.Contract(contractAddress, abi, signer);
