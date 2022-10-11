@@ -77,7 +77,7 @@ const Home = (props: Props) => {
         tokenId
       );
     } catch (error) {
-      alert(error);
+      alert("Transaction failed");
     }
   };
   const checkTokenId = async (token_id: number) => {
@@ -94,11 +94,11 @@ const Home = (props: Props) => {
   };
   return (
     <div className="overflow-hidden sm:overflow-x-scroll">
-      <div className={styles.herosection}>
+      <div className={styles.herosection} id={styles.overlay}>
         <Navbar action={connectWallet} status={web3provider} />
-        <div className="flex justify-center text-white align-center pt-40 ">
+        <div className="flex justify-center text-white align-center pt-40">
           <div className="space-y-4">
-            <div className="text-5xl text-center font-extrabold text-white sm:text-2xl ">
+            <div className="text-5xl text-center font-extrabold text-white sm:text-2xl">
               BE THE ULIMATE IBALR AND
               <br /> WINN YOUR DREAM PRIZE
             </div>
@@ -114,22 +114,20 @@ const Home = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className={styles.cardsection}>
-        <div className="p-10">
-          <div className={styles.borderTitle}>
-            <div className="sm:text-3xl">Uncommon/Rare</div>
-          </div>
-          <div className="flex space-x-10 mt-5 justify-center lg:space-x-5  md:flex-col items-center space-y-5">
-            <Card />
-            <CountDownSection
-              sendNft={sendNft}
-              setAccount={setAccount2}
-              setTokenId={setTokenId}
-            />
-            <Card />
-          </div>
-        </div>
+      <div className="flex justify-center my-10">
+        <fieldset className="border border-red-500 w-4/5">
+          <legend className="border border-red-500 text-center rounded-full text-white px-20 py-7 text-3xl font-extrabold lg:px-10 lg:text-2xl md:text-xl md:px-8">
+            UNCOMMON/RARE
+          </legend>
+
+          <CountDownSection
+            sendNft={sendNft}
+            setAccount={setAccount2}
+            setTokenId={setTokenId}
+          />
+        </fieldset>
       </div>
+
       <Aboutus />
       <Footer />
     </div>

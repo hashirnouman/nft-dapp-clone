@@ -13,7 +13,7 @@ const Navbar = ({ action, status }: Props) => {
   const [show, setShow] = useState(false);
   return (
     <>
-      <div className="flex justify-between p-5 text-white font-extrabold items-center lg:flex-col w-full">
+      <div className="flex justify-between px-10 py-5 text-white font-extrabold items-center lg:flex-col w-full ">
         <div className="cursor-pointer lg:hidden">Home</div>
         <div className=" cursor-pointer lg:hidden">Marketplace</div>
         <div className="cursor-pointer lg:hidden">How to play</div>
@@ -49,7 +49,7 @@ const Navbar = ({ action, status }: Props) => {
       </div>
       <div>
         {show && (
-          <div className=" lg:bg-black lg:absolute lg:bottom-0 lg:w-full lg:h-4/5 lg:text-white lg:bg-opacity-70 flex justify-center items-center">
+          <div className="hidden lg:visible lg:bg-black lg:absolute lg:bottom-0 lg:w-full lg:h-4/5 lg:text-white lg:bg-opacity-70 lg:flex justify-center items-center">
             <div className=" flex-col space-y-28 text-center font-extrabold text-lg">
               <div className="cursor-pointer">Home</div>
               <div className=" cursor-pointer">Marketplace</div>
