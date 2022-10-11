@@ -25,10 +25,14 @@ type Props = {};
 
 const Home = (props: Props) => {
   const [web3provider, setWeb3Provider] = useState<React.SetStateAction<{}>>();
+
   const [signerValue, setSignerValue] = useState({
     signer: "",
   });
-
+  const [approved, setApproved] = useState(false);
+  const [account2, setAccount2] = useState();
+  const [tokenId, setTokenId] = useState(0);
+  const contractAddress = "0xe1ad5D0a574A5B2909dDf82c30BCEAd80fAE8a7e";
   const connectWallet = async () => {
     try {
       let web3modal = new Web3Modal({
@@ -53,14 +57,40 @@ const Home = (props: Props) => {
   };
 
   const startMint = async () => {
-    const provider = new ethers.providers.JsonRpcProvider(
-      "https://goerli.infura.io/v3/5329145a21fe4e85a2cfa300680d29de"
-    );
-    const contractAddress = "0xe1ad5D0a574A5B2909dDf82c30BCEAd80fAE8a7e";
     const signer: any = signerValue.signer;
     const contractInstance = new ethers.Contract(contractAddress, abi, signer);
     const writeContract = contractInstance.connect(signer);
     await writeContract.safeMint();
+  };
+  const sendNft = async (e: any) => {
+    e.preventDefault();
+    const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+    let accounts = await provider.send("eth_requestAccounts", []);
+    let account1 = accounts[0];
+    const signer: any = signerValue.signer;
+    const contractInstance = new ethers.Contract(contractAddress, abi, signer);
+    const writeContract = contractInstance.connect(signer);
+    try {
+      await writeContract["safeTransferFrom(address,address,uint256)"](
+        account1,
+        account2,
+        tokenId
+      );
+    } catch (error) {
+      alert(error);
+    }
+  };
+  const checkTokenId = async (token_id: number) => {
+    const provider: any =
+      "https://goerli.infura.io/v3/5329145a21fe4e85a2cfa300680d29de";
+    const contract = new ethers.Contract(contractAddress, abi, provider);
+    const tx = await contract.getApproved(token_id);
+    if (tx) {
+      setApproved(true);
+      setTokenId(token_id);
+    } else {
+      alert("Invalid token id");
+    }
   };
   return (
     <div className="overflow-hidden sm:overflow-x-scroll">
@@ -87,11 +117,15 @@ const Home = (props: Props) => {
       <div className={styles.cardsection}>
         <div className="p-10">
           <div className={styles.borderTitle}>
-            <div className="sm:text-3xl">Uncommon / Rare</div>
+            <div className="sm:text-3xl">Uncommon/Rare</div>
           </div>
           <div className="flex space-x-10 mt-5 justify-center lg:space-x-5  md:flex-col items-center space-y-5">
             <Card />
-            <CountDownSection />
+            <CountDownSection
+              sendNft={sendNft}
+              setAccount={setAccount2}
+              setTokenId={setTokenId}
+            />
             <Card />
           </div>
         </div>
