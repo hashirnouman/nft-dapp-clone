@@ -2,11 +2,12 @@ import React from "react";
 import styles from "./styles/Aboutus.module.css";
 import ecllipse from "../../../assets/Ellipse.svg";
 import avatar from "../../../assets/avatar.svg";
+import commet from "../../../assets/commet.svg";
 type Props = {};
 
 const Aboutus = (props: Props) => {
   return (
-    <div className="bg-background flex justify-center w-full">
+    <div className="flex justify-center w-full">
       <div className="p-20 bg-foreground text-white w-4/5 rounded-2xl mb-28 lg:w-5/5 lg:p-5  ">
         <div className="flex space-x-16  lg:flex-col lg:space-y-20 lg:align-middle">
           <div className="flex-col space-y-5 w-2/5 lg:w-4/5">

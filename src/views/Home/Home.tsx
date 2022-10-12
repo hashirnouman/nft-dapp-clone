@@ -10,6 +10,7 @@ import Web3Modal from "web3modal";
 import { CoinbaseWalletSDK } from "@coinbase/wallet-sdk/dist/CoinbaseWalletSDK";
 import abi from "../../utils/abi.json";
 import Navbar from "../../components/Navbar";
+import commet from "../../assets/commet.svg";
 const providerOptions = {
   coinbasewallet: {
     package: CoinbaseWalletSDK,
@@ -93,7 +94,7 @@ const Home = (props: Props) => {
     }
   };
   return (
-    <div className="overflow-hidden sm:overflow-x-scroll">
+    <div className="overflow-hidden sm:overflow-x-hidden">
       <div className={styles.herosection} id={styles.overlay}>
         <Navbar action={connectWallet} status={web3provider} />
         <div className="flex justify-center text-white align-center pt-40">
@@ -114,12 +115,11 @@ const Home = (props: Props) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center my-10">
-        <fieldset className="border border-red-500 w-4/5">
+      <div className="flex justify-center my-5">
+        <fieldset className="border border-red-500 rounded-3xl w-10/12 py-10">
           <legend className="border border-red-500 text-center rounded-full text-white px-20 py-7 text-3xl font-extrabold lg:px-10 lg:text-2xl md:text-xl md:px-8">
             UNCOMMON/RARE
           </legend>
-
           <CountDownSection
             sendNft={sendNft}
             setAccount={setAccount2}
@@ -128,6 +128,7 @@ const Home = (props: Props) => {
         </fieldset>
       </div>
 
+      <img src={commet} alt="commet" className={styles.bottomright} />
       <Aboutus />
       <Footer />
     </div>

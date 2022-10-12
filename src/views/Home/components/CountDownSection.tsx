@@ -8,39 +8,42 @@ type Props = {
 };
 const CountDownSection = ({ sendNft, setAccount, setTokenId }: Props) => {
   return (
-    <div className="flex justify-center p-10 rounded-xl space-x-4 lg:flex-col lg:space-y-5 lg:items-center">
+    <div className="flex justify-center space-x-12 text-white font-bold lg:flex-col lg:items-center lg:space-y-6">
       <Card />
-      <div className="text-white font-bold ">
-        <h1 className="text-4xl lg:text-xl text-center">
-          Chase2Earn | Public NFT Sale
-        </h1>
-        <p className="text-sm text-center p-3">Sale will Start In</p>
-        <div className="flex justify-center items-center space-x-4">
-          <p className="text-base">Lorem ipsum dolor sit amet.</p>
+      <div className="space-y-6">
+        <div className="text-4xl text-center">Chase2Earn | Public NFT Sale</div>
+        <p className="text-lg text-center">Sale will Start In</p>
+        <div className="flex space-x-5">
+          <p className="text-lg text-right">
+            Uncommon NFT Total Supply <br /> 4500
+          </p>
           <div className={styles.vl}></div>
-          <p className="text-base">Rare NFT Total Supply 4500</p>
+          <p className="text-lg text-left">
+            Rare NFT Total Supply <br /> 4500
+          </p>
         </div>
-        <form onSubmit={(e) => sendNft(e)}>
-          <div className="flex flex-col w-5/5 items-center space-y-5 mt-5">
-            <input
-              className="w-5/5 bg-foreground p-2 rounded-lg"
-              placeholder="Enter Token id"
-              onChange={(e) => setTokenId(e.target.value)}
-              required
-            />
-            <input
-              className="w-5/5 bg-foreground p-2 rounded-lg"
-              placeholder="Enter receiver wallet address"
-              onChange={(e) => setAccount(e.target.value)}
-              required
-            />
-            <button
-              type="submit"
-              className="text-sm p-5 text-white bg-foreground rounded-lg w-2/5"
-            >
-              Send
-            </button>
-          </div>
+        <form
+          onSubmit={(e) => sendNft(e)}
+          className=" flex flex-col justify-center items-center space-y-8"
+        >
+          <input
+            className="bg-foreground px-6 py-3 rounded-lg"
+            placeholder="Enter Token id"
+            onChange={(e) => setTokenId(e.target.value)}
+            required
+          />
+          <input
+            className=" bg-foreground px-6 py-3 rounded-lg"
+            placeholder="Enter receiver wallet address"
+            onChange={(e) => setAccount(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            className="text-sm p-3 text-white bg-foreground rounded-lg  w-1/2"
+          >
+            Send
+          </button>
         </form>
       </div>
       <Card />
